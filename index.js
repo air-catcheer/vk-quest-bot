@@ -1,15 +1,15 @@
 require('dotenv').config();
 
+const { VK, Keyboard } = require('vk-io');
+const vk = new VK({ token: process.env.VK_TOKEN });
+
+// ===== ОБРАБОТКА ПОДТВЕРЖДЕНИЯ CALLBACK API =====
 vk.updates.on('webhook', async (ctx, next) => {
   if (ctx.body.type === 'confirmation') {
     return ctx.send('cb4b0c26'); 
   }
   await next();
 });
-
-const { VK, Keyboard } = require('vk-io');
-const { Pool } = require('pg');
-const xlsx = require('xlsx');
 
 const vk = new VK({ token: process.env.VK_TOKEN });
 const pool = new Pool({ connectionString: process.env.DB_URL });
