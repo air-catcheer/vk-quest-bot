@@ -7,6 +7,13 @@ const xlsx = require('xlsx');
 const vk = new VK({ token: process.env.VK_TOKEN });
 const pool = new Pool({ connectionString: process.env.DB_URL });
 
+vk.updates.on('webhook', async (ctx, next) => {
+  if (ctx.body.type === 'confirmation') {
+    return ctx.send('cb4b0c26'); 
+  }
+  await next();
+});
+
 // админы
 const ADMINS = [12345678, 87654321];
 
