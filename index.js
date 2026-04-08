@@ -3,12 +3,11 @@ require('dotenv').config();
 const { VK, Keyboard } = require('vk-io');
 const { Pool } = require('pg');
 const xlsx = require('xlsx');
-const { createCanvas } = require('canvas');
 
 const vk = new VK({ token: process.env.VK_TOKEN });
 const pool = new Pool({ connectionString: process.env.DB_URL });
 
-// 👑 ВСТАВЬ ID АДМИНОВ
+// админы
 const ADMINS = [12345678, 87654321];
 
 // ===== DB INIT =====
@@ -212,9 +211,7 @@ vk.updates.on('message_new', async (ctx) => {
 
     await pool.query('UPDATE teams SET x=$1,y=$2,energy=energy-3 WHERE id=$3', [nx, ny, team.id]);
 
-    const img = generateMap(nx, ny);
-
-    await ctx.send({ attachment: { value: img, type: 'photo' } });
+   await ctx.send(`Вы переместились: (${nx}, ${ny})`);
   }
 });
 
